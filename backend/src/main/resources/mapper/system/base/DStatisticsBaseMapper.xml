@@ -1,0 +1,437 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="packageMapper.base.DStatisticsBaseMapper">
+
+
+    <insert id="insertDStatistics" >
+        INSERT INTO `d_statistics`
+        (
+        <trim suffixOverrides=",">
+                    <if test="ID!=null">
+                        `ID`,
+                    </if>
+                    <if test="uSERID!=null">
+                        `USER_ID`,
+                    </if>
+                    <if test="tOTALAMOUNT!=null">
+                        `TOTAL_AMOUNT`,
+                    </if>
+                    <if test="uSERNAME!=null">
+                        `USER_NAME`,
+                    </if>
+                    <if test="oRDERCOUNT!=null">
+                        `ORDER_COUNT`,
+                    </if>
+        </trim>
+        )
+        VALUES
+        (
+        <trim suffixOverrides=",">
+                <if test="ID!=null">
+                    #{ID},
+                </if>
+                <if test="uSERID!=null">
+                    #{uSERID},
+                </if>
+                <if test="tOTALAMOUNT!=null">
+                    #{tOTALAMOUNT},
+                </if>
+                <if test="uSERNAME!=null">
+                    #{uSERNAME},
+                </if>
+                <if test="oRDERCOUNT!=null">
+                    #{oRDERCOUNT},
+                </if>
+        </trim>
+        )
+    </insert>
+
+
+
+
+    <update id="updateDStatistics">
+        UPDATE `d_statistics`
+        SET
+        <trim suffixOverrides=",">
+            <if test="uSERID != null">
+                `USER_ID` = #{uSERID},
+            </if>
+            <if test="tOTALAMOUNT != null">
+                `TOTAL_AMOUNT` = #{tOTALAMOUNT},
+            </if>
+            <if test="uSERNAME != null and uSERNAME!=''">
+                `USER_NAME` = #{uSERNAME},
+            </if>
+            <if test="oRDERCOUNT != null">
+                `ORDER_COUNT` = #{oRDERCOUNT},
+            </if>
+        </trim>
+        WHERE
+        <trim suffixOverrides="and">
+                `ID` = #{ID} and
+        </trim>
+    </update>
+
+    <update id="update">
+        UPDATE `d_statistics`
+        SET
+        <trim suffixOverrides=",">
+        <if test="set.uSERID != null">
+            `USER_ID` = #{set.uSERID},
+        </if>
+        <if test="set.tOTALAMOUNT != null">
+            `TOTAL_AMOUNT` = #{set.tOTALAMOUNT},
+        </if>
+        <if test="set.uSERNAME != null and set.uSERNAME!=''">
+            `USER_NAME` = #{set.uSERNAME},
+        </if>
+        <if test="set.oRDERCOUNT != null">
+            `ORDER_COUNT` = #{set.oRDERCOUNT},
+        </if>
+        </trim>
+        <trim prefix="where" suffixOverrides="and | or">
+                <if test="where.IDList != null">
+                    `ID` in
+                    <foreach collection="where.IDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.IDSt !=null">
+                `ID` >= #{where.IDSt} and
+            </if>
+            <if test="where.IDEd!=null">
+                `ID` &lt;= #{where.IDEd} and
+            </if>
+                <if test="where.uSERIDList != null">
+                    `USER_ID` in
+                    <foreach collection="where.uSERIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.uSERIDSt !=null">
+                `USER_ID` >= #{where.uSERIDSt} and
+            </if>
+            <if test="where.uSERIDEd!=null">
+                `USER_ID` &lt;= #{where.uSERIDEd} and
+            </if>
+                <if test="where.tOTALAMOUNTList != null">
+                    `TOTAL_AMOUNT` in
+                    <foreach collection="where.tOTALAMOUNTList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.tOTALAMOUNTSt !=null">
+                `TOTAL_AMOUNT` >= #{where.tOTALAMOUNTSt} and
+            </if>
+            <if test="where.tOTALAMOUNTEd!=null">
+                `TOTAL_AMOUNT` &lt;= #{where.tOTALAMOUNTEd} and
+            </if>
+                <if test="where.uSERNAMEList != null">
+                    `USER_NAME` in
+                    <foreach collection="where.uSERNAMEList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test ="where.fuzzyUSERNAME!=null and where.fuzzyUSERNAME.size()>0">
+                (
+                <foreach collection="where.fuzzyUSERNAME"  separator="or" item="item">
+                    `USER_NAME` like concat('%',#{item},'%')
+                </foreach>
+                ) and
+            </if>
+            <if test ="where.rightFuzzyUSERNAME!=null and where.rightFuzzyUSERNAME.size()>0">
+                (
+                <foreach collection="where.rightFuzzyUSERNAME"  separator="or" item="item">
+                    `USER_NAME` like concat(#{item},'%')
+                </foreach>
+                ) and
+            </if>
+                <if test="where.oRDERCOUNTList != null">
+                    `ORDER_COUNT` in
+                    <foreach collection="where.oRDERCOUNTList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+            <if test="where.oRDERCOUNTSt !=null">
+                `ORDER_COUNT` >= #{where.oRDERCOUNTSt} and
+            </if>
+            <if test="where.oRDERCOUNTEd!=null">
+                `ORDER_COUNT` &lt;= #{where.oRDERCOUNTEd} and
+            </if>
+        </trim>
+    </update>
+
+
+    <resultMap type="packageModel.DStatistics" id="DStatisticsMap">
+        <result property="ID" column="ID"/>
+        <result property="uSERID" column="USER_ID"/>
+        <result property="tOTALAMOUNT" column="TOTAL_AMOUNT"/>
+        <result property="uSERNAME" column="USER_NAME"/>
+        <result property="oRDERCOUNT" column="ORDER_COUNT"/>
+    </resultMap>
+
+
+    <select id="queryDStatistics" resultMap="DStatisticsMap">
+        select
+        <include refid="baseResult"></include>
+        from  `d_statistics`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="ID != null">
+                `ID` = #{ID} and
+            </if>
+            <if test="uSERID != null">
+                `USER_ID` = #{uSERID} and
+            </if>
+            <if test="tOTALAMOUNT != null">
+                `TOTAL_AMOUNT` = #{tOTALAMOUNT} and
+            </if>
+            <if test="uSERNAME != null and uSERNAME!=''">
+                `USER_NAME` = #{uSERNAME} and
+            </if>
+            <if test="oRDERCOUNT != null">
+                `ORDER_COUNT` = #{oRDERCOUNT} and
+            </if>
+            <if test = "(_parameter instanceof packageModel.DStatistics$QueryBuilder) == true">
+                <if test="IDList != null">
+                    `ID` in
+                    <foreach collection="IDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="IDSt !=null">
+                    `ID` >= #{IDSt} and
+                </if>
+                <if test="IDEd!=null">
+                    `ID` &lt;= #{IDEd} and
+                </if>
+                <if test="uSERIDList != null">
+                    `USER_ID` in
+                    <foreach collection="uSERIDList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="uSERIDSt !=null">
+                    `USER_ID` >= #{uSERIDSt} and
+                </if>
+                <if test="uSERIDEd!=null">
+                    `USER_ID` &lt;= #{uSERIDEd} and
+                </if>
+                <if test="tOTALAMOUNTList != null">
+                    `TOTAL_AMOUNT` in
+                    <foreach collection="tOTALAMOUNTList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="tOTALAMOUNTSt !=null">
+                    `TOTAL_AMOUNT` >= #{tOTALAMOUNTSt} and
+                </if>
+                <if test="tOTALAMOUNTEd!=null">
+                    `TOTAL_AMOUNT` &lt;= #{tOTALAMOUNTEd} and
+                </if>
+                <if test="uSERNAMEList != null">
+                    `USER_NAME` in
+                    <foreach collection="uSERNAMEList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test ="fuzzyUSERNAME!=null and fuzzyUSERNAME.size()>0">
+                    (
+                    <foreach collection="fuzzyUSERNAME"  separator="or" item="item">
+                        `USER_NAME` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUSERNAME!=null and rightFuzzyUSERNAME.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUSERNAME"  separator="or" item="item">
+                        `USER_NAME` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test="oRDERCOUNTList != null">
+                    `ORDER_COUNT` in
+                    <foreach collection="oRDERCOUNTList" close=")" open="(" separator="," item="item">
+                        #{item}
+                    </foreach> and
+                </if>
+                <if test="oRDERCOUNTSt !=null">
+                    `ORDER_COUNT` >= #{oRDERCOUNTSt} and
+                </if>
+                <if test="oRDERCOUNTEd!=null">
+                    `ORDER_COUNT` &lt;= #{oRDERCOUNTEd} and
+                </if>
+            </if>
+        </trim>
+    </select>
+
+    <select id="queryDStatisticsLimit1" resultMap="DStatisticsMap">
+        select
+        <include refid="baseResult"></include>
+        from  `d_statistics`
+        <trim prefix="where" suffixOverrides="and | or">
+            <if test="ID != null">
+                `ID` = #{ID} and
+            </if>
+            <if test="uSERID != null">
+                `USER_ID` = #{uSERID} and
+            </if>
+            <if test="tOTALAMOUNT != null">
+                `TOTAL_AMOUNT` = #{tOTALAMOUNT} and
+            </if>
+            <if test="uSERNAME != null and uSERNAME!=''">
+                `USER_NAME` = #{uSERNAME} and
+            </if>
+            <if test="oRDERCOUNT != null">
+                `ORDER_COUNT` = #{oRDERCOUNT} and
+            </if>
+            <if test = "(_parameter instanceof packageModel.DStatistics$QueryBuilder) == true">
+                    <if test="IDList != null">
+                        `ID` in
+                        <foreach collection="IDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="IDSt !=null">
+                    `ID` >= #{IDSt} and
+                </if>
+                <if test="IDEd!=null">
+                    `ID` &lt;= #{IDEd} and
+                </if>
+                    <if test="uSERIDList != null">
+                        `USER_ID` in
+                        <foreach collection="uSERIDList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="uSERIDSt !=null">
+                    `USER_ID` >= #{uSERIDSt} and
+                </if>
+                <if test="uSERIDEd!=null">
+                    `USER_ID` &lt;= #{uSERIDEd} and
+                </if>
+                    <if test="tOTALAMOUNTList != null">
+                        `TOTAL_AMOUNT` in
+                        <foreach collection="tOTALAMOUNTList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="tOTALAMOUNTSt !=null">
+                    `TOTAL_AMOUNT` >= #{tOTALAMOUNTSt} and
+                </if>
+                <if test="tOTALAMOUNTEd!=null">
+                    `TOTAL_AMOUNT` &lt;= #{tOTALAMOUNTEd} and
+                </if>
+                    <if test="uSERNAMEList != null">
+                        `USER_NAME` in
+                        <foreach collection="uSERNAMEList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test ="fuzzyUSERNAME!=null and fuzzyUSERNAME.size()>0">
+                    (
+                    <foreach collection="fuzzyUSERNAME"  separator="or" item="item">
+                        `USER_NAME` like concat('%',#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                <if test ="rightFuzzyUSERNAME!=null and rightFuzzyUSERNAME.size()>0">
+                    (
+                    <foreach collection="rightFuzzyUSERNAME"  separator="or" item="item">
+                        `USER_NAME` like concat(#{item},'%')
+                    </foreach>
+                    ) and
+                </if>
+                    <if test="oRDERCOUNTList != null">
+                        `ORDER_COUNT` in
+                        <foreach collection="oRDERCOUNTList" close=")" open="(" separator="," item="item">
+                            #{item}
+                        </foreach> and
+                    </if>
+                <if test="oRDERCOUNTSt !=null">
+                    `ORDER_COUNT` >= #{oRDERCOUNTSt} and
+                </if>
+                <if test="oRDERCOUNTEd!=null">
+                    `ORDER_COUNT` &lt;= #{oRDERCOUNTEd} and
+                </if>
+            </if>
+        </trim>
+        limit 1
+    </select>
+
+    <sql id="allResult">
+        <trim suffixOverrides=",">
+        `ID`,
+        `USER_ID`,
+        `TOTAL_AMOUNT`,
+        `USER_NAME`,
+        `ORDER_COUNT`,
+        </trim>
+    </sql>
+
+
+
+    <sql id="baseResult">
+        <trim suffixOverrides=",">
+            <if test = "(_parameter instanceof packageModel.DStatistics$QueryBuilder) == true">
+
+                <if test="fetchFields==null">
+                    <include refid="allResult"></include>
+                </if>
+                <if test="fetchFields!=null">
+                    <if test="fetchFields.AllFields !=null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields ==null and fetchFields.fetchFields==null and fetchFields.excludeFields==null and fetchFields.otherFields==null">
+                        <include refid="allResult"></include>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.fetchFields!=null">
+                    <if test="fetchFields.fetchFields.ID==true">
+                        `ID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.uSERID==true">
+                        `USER_ID`,
+                    </if>
+                    <if test="fetchFields.fetchFields.tOTALAMOUNT==true">
+                        `TOTAL_AMOUNT`,
+                    </if>
+                    <if test="fetchFields.fetchFields.uSERNAME==true">
+                        `USER_NAME`,
+                    </if>
+                    <if test="fetchFields.fetchFields.oRDERCOUNT==true">
+                        `ORDER_COUNT`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.AllFields==null and fetchFields.excludeFields!=null">
+                    <if test="fetchFields.excludeFields.ID==null">
+                        `ID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.uSERID==null">
+                        `USER_ID`,
+                    </if>
+                    <if test="fetchFields.excludeFields.tOTALAMOUNT==null">
+                        `TOTAL_AMOUNT`,
+                    </if>
+                    <if test="fetchFields.excludeFields.uSERNAME==null">
+                        `USER_NAME`,
+                    </if>
+                    <if test="fetchFields.excludeFields.oRDERCOUNT==null">
+                        `ORDER_COUNT`,
+                    </if>
+                    </if>
+                    <if test="fetchFields.otherFields!=null and fetchFields.otherFields.size>0">
+                        <foreach collection="fetchFields.otherFields" index="index" item="item" separator=",">
+                        `#{item}`
+                        </foreach>
+                    </if>
+                </if>
+            </if>
+            <if test="(_parameter instanceof packageModel.DStatistics$QueryBuilder) == false" >
+                <include refid="allResult"></include>
+            </if>
+
+        </trim>
+    </sql>
+
+
+</mapper>
