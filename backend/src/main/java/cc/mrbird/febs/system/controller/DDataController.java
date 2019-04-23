@@ -33,7 +33,7 @@ import java.util.stream.IntStream;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("ddata")
+@RequestMapping("api/ddata")
 public class DDataController extends BaseController {
 
     @Autowired
@@ -52,11 +52,21 @@ public class DDataController extends BaseController {
         this.dDataService.createDData(dData);
     }
 
+
+    @RequestMapping("/vip/{mobile}/{clientName}/{creditCount}")
+    public FebsResponse vipData(@PathVariable(value = "mobile") String mobile, @PathVariable(value = "clientName") String clientName,
+                                @PathVariable(value = "creditCount") String creditCount){
+        DData dData = new DData();
+        dData.setAmount(Float.valueOf(creditCount));
+
+        return new FebsResponse().message("成功");
+    }
+
     @PostMapping("/update")
     public FebsResponse updateData(@Valid DData dData) throws FebsException {
         String des = dData.getDescribeAdd();
-        if (StringUtils.isNotEmpty(des)){
-            dData.setDescribe(dData.getDescribe()+des+ "  ---" + DateTimeUtils.convertDateToStringByFormat(new Date())+"\n\r");
+        if (StringUtils.isNotEmpty(des)) {
+            dData.setDescribe(dData.getDescribe() + des + "  ---" + DateTimeUtils.convertDateToStringByFormat(new Date()) + "\n\r");
         }
         if ("finish".equals(dData.getDataStatus())) {
             if (dData.getAmount() == null || dData.getAmount() < 0.1) {

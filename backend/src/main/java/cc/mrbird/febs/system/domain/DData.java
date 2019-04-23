@@ -105,10 +105,16 @@ public class DData implements Serializable {
 
     @Column(name = "AMOUNT")
     @ExcelField(value = "金额(万)")
+    /**
+     * 放款金额
+     */
     private Float amount;
 
 
     @Transient
+    /**
+     * 描述
+     */
     private String describeAdd;
 
 

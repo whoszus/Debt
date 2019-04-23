@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>银通</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="http://unpkg.com/vue-ydui/dist/ydui.rem.css">
+    <!-- 引入rem自适应类库 -->
+    <script src="http://unpkg.com/vue-ydui/dist/ydui.flexible.js"></script>
+</head>
+<body>
+<div id="app">
+    <!-- <yd-button type="primary" @click.native="handleClick">Click Me!</yd-button> -->
+    <template>
+        <yd-layout title="申请信息">
+            <yd-cell-item>
+                <span slot="left">手机号：</span>
+                <yd-input slot="right" v-model="mobile_number" ref='mobile_number' required regex="mobile" placeholder="请输入手机号码"></yd-input>
+            </yd-cell-item>
+            <yd-cell-item>
+                <span slot="left">姓名：</span>
+                <yd-input slot="right" v-model="client_name" ref='client_name' required :show-clear-icon="false" placeholder="请输入您的姓名"></yd-input>
+            </yd-cell-item>
+            <yd-cell-item>
+                <span slot="left">芝麻信用分：</span>
+                <yd-input slot="right" v-model="credit_count" required :show-clear-icon="false" placeholder="请输入您的芝麻信用分"></yd-input>
+            </yd-cell-item>
+            <yd-button @click.native="openConfrim" size="large">Confirm</yd-button>
+
+        </yd-layout>
+    </template>
+   
+
+    <template>
+        <yd-step current="1">
+            <yd-step-item>
+                <span slot="bottom">填写信息</span>
+            </yd-step-item>
+            <yd-step-item>
+                <span slot="bottom">经理回访</span>
+            </yd-step-item>
+            <yd-step-item>
+                <span slot="bottom">定制方案</span>
+            </yd-step-item>
+            <yd-step-item>
+                <span slot="bottom">放款</span>
+            </yd-step-item>
+        </yd-step>
+    </template>
+    
+
+   
+
+
+
+</div>
+
+<div class="note" :style ="note"></div>
+<!-- 引入 Vue -->
+<script src="http://unpkg.com/vue"></script>
+<!-- 引入组件库 -->
+<script src="http://unpkg.com/vue-ydui/dist/ydui.rem.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.1/vue-resource.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script> -->
+<script>
+    // Vue.prototype.$http = axios 
+    // Vue.use(require('vue-resource'));
+    new Vue({
+        el: '#app',
+        data (){
+            return {
+                mobile_number:'',
+                client_name:'',
+                credit_count :''
+                // note: {
+                //     backgroundImage: "url(" + require("https://img.zcool.cn/community/0151a858b6759aa801219c774f9c26.jpg@2o.jpg") + ")",
+                //     backgroundRepeat: "no-repeat",
+                //     backgroundSize: "25px auto",
+                //     marginTop: "5px",
+                // }
+            }
+        },
+        methods: {
+            openConfrim() {
+                const mobile = this.$refs.mobile_number; 
+                const name = this.$refs.client_name;
+                if (mobile.iserror){
+                    this.$dialog.notify({
+                        mes: '请检查手机号码格式！',
+                        timeout: 5000,
+                        callback: () => {
+                            console.log('消失');
+                        }
+                    });
+                    return
+                }
+
+                if (name.iserror) {
+                    this.$dialog.notify({
+                        mes: '请填写您的名字',
+                        timeout: 5000,
+                    });
+                    return
+                }
+                debugger
+                var api = 'http://localhost:8000/vip/'+ this.mobile_number+ '/' + this.client_name + '/' + this.credit_count;
+                Vue.http.get(this.api,{emulateJSON:true}).then( (response)=>{
+                        console.log(response.data);
+                    }).catch(function(response) {
+                        console.log(response);
+                    })
+                this.$dialog.loading.open('正在提交预审中');
+
+                setTimeout(() => {
+                    this.$dialog.loading.close();
+                    this.$dialog.alert({mes: '您有2W的额度已经初步审批下来，已为您分配私人业务经理，请您稍后接听业务经理电话！'});
+                }, 4000);
+            }
+        }
+    })
+
+    
+
+</script>
+</body>
+</html>

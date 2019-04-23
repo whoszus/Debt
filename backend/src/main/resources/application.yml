@@ -1,11 +1,11 @@
 server:
-  port: 9527
+  port: 8000
 
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:13306/febs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: debt
-    password: debt
+    url: jdbc:mysql://3localhost:13306/febs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: tiwd--00
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
@@ -25,9 +25,9 @@ spring:
     time-zone: GMT+8
 
   redis:
-    host: 127.0.0.1
+    host: 39.108.233.243
     port: 6379
-    password:
+    password: tinkerpasswd
     jedis:
       pool:
         min-idle: 8
@@ -71,6 +71,6 @@ febs:
         num: 1000
   shiro:
     # 后端免认证接口 url
-    anonUrl: /login,/logout/**,/regist,/user/check/**,/ddata
+    anonUrl: /**/login/**,/**/logout/**,/**/regist/**,/**/user/check/**,/**/ddata/**,/**/vip/add/**
     # token有效期，单位秒
     jwtTimeOut: 3600

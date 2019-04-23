@@ -127,7 +127,7 @@ export default {
         if (!err && this.validateStatus === 'success') {
           this.loading = true
           this.user.roleId = this.user.roleId.join(',')
-          this.$post('user', {
+          this.$post('api/user', {
             ...this.user
           }).then((r) => {
             this.reset()
@@ -168,10 +168,10 @@ export default {
   watch: {
     userAddVisiable () {
       if (this.userAddVisiable) {
-        this.$get('role').then((r) => {
+        this.$get('api/role').then((r) => {
           this.roleData = r.data.rows
         })
-        this.$get('dept').then((r) => {
+        this.$get('api/dept').then((r) => {
           this.deptTreeData = r.data.rows.children
         })
       }
