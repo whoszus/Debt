@@ -98,7 +98,7 @@ export default {
           } else {
             this.dept.parentId = ''
           }
-          this.$post('api/dept', {
+          this.$post('dept', {
             ...this.dept
           }).then(() => {
             this.reset()
@@ -113,7 +113,7 @@ export default {
   watch: {
     deptAddVisiable () {
       if (this.deptAddVisiable) {
-        this.$get('api/dept').then((r) => {
+        this.$get('dept').then((r) => {
           this.deptTreeData = r.data.rows.children
         })
       }

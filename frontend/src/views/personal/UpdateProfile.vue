@@ -154,7 +154,7 @@ export default {
   watch: {
     profileEditVisiable () {
       if (this.profileEditVisiable) {
-        this.$get('api/dept').then((r) => {
+        this.$get('dept').then((r) => {
           this.deptTreeData = r.data.rows.children
         })
       }

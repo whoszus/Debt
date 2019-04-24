@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://3localhost:13306/febs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    url: jdbc:mysql://39.108.233.243:13306/febs?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
     username: root
-    password: tiwd--00
+    password: tinkerpasswd--00
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       minimum-idle: 5
@@ -71,6 +71,6 @@ febs:
         num: 1000
   shiro:
     # 后端免认证接口 url
-    anonUrl: /**/login/**,/**/logout/**,/**/regist/**,/**/user/check/**,/**/ddata/**,/**/vip/add/**
+    anonUrl: /login,/logout/**,/regist,/user/check/**,/ddata/vip/**
     # token有效期，单位秒
     jwtTimeOut: 3600

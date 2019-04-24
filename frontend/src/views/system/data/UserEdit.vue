@@ -130,7 +130,7 @@ export default {
             user.id = this.id
 //            user.operatorName = this.currentUser.username
 //          user.operatorId = parseFloat(this.currentUser.id)
-            this.$post('api/ddata/update', {
+            this.$post('ddata/update', {
               ...user
             }).then((r) => {
               this.loading = false

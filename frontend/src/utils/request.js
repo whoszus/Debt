@@ -7,7 +7,7 @@ moment.locale('zh-cn')
 
 // 统一配置
 let FEBS_REQUEST = axios.create({
-  baseURL: process.env.BASE_API,
+  baseURL: 'http://localhost:8000/',
   responseType: 'json',
   validateStatus (status) {
     // 200 外的状态码都认定为失败

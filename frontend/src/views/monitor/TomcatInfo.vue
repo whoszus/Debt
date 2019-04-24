@@ -138,18 +138,18 @@ export default {
     create () {
       this.time = moment().format('YYYY年MM月DD日 HH时mm分ss秒')
       axios.all([
-        this.$get('api/actuator/metrics/tomcat.sessions.created'),
-        this.$get('api/actuator/metrics/tomcat.sessions.expired'),
-        this.$get('api/actuator/metrics/tomcat.sessions.active.current'),
-        this.$get('api/actuator/metrics/tomcat.sessions.active.max'),
-        this.$get('api/actuator/metrics/tomcat.sessions.rejected'),
-        this.$get('api/actuator/metrics/tomcat.global.sent'),
-        this.$get('api/actuator/metrics/tomcat.global.request.max'),
-        this.$get('api/actuator/metrics/tomcat.global.request'),
-        this.$get('api/actuator/metrics/tomcat.servlet.request'),
-        this.$get('api/actuator/metrics/tomcat.servlet.request.max'),
-        this.$get('api/actuator/metrics/tomcat.threads.current'),
-        this.$get('api/actuator/metrics/tomcat.threads.config.max')
+        this.$get('actuator/metrics/tomcat.sessions.created'),
+        this.$get('actuator/metrics/tomcat.sessions.expired'),
+        this.$get('actuator/metrics/tomcat.sessions.active.current'),
+        this.$get('actuator/metrics/tomcat.sessions.active.max'),
+        this.$get('actuator/metrics/tomcat.sessions.rejected'),
+        this.$get('actuator/metrics/tomcat.global.sent'),
+        this.$get('actuator/metrics/tomcat.global.request.max'),
+        this.$get('actuator/metrics/tomcat.global.request'),
+        this.$get('actuator/metrics/tomcat.servlet.request'),
+        this.$get('actuator/metrics/tomcat.servlet.request.max'),
+        this.$get('actuator/metrics/tomcat.threads.current'),
+        this.$get('actuator/metrics/tomcat.threads.config.max')
       ]).then((r) => {
         this.tomcat.sessions.created = r[0].data.measurements[0].value
         this.tomcat.sessions.expired = r[1].data.measurements[0].value

@@ -127,7 +127,7 @@ export default {
     },
     fetch () {
       this.loading = true
-      this.$get('api/actuator/httptrace').then((r) => {
+      this.$get('actuator/httptrace').then((r) => {
         let data = r.data
         this.loading = false
         let filterData = []

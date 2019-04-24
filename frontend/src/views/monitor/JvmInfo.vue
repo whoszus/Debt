@@ -152,21 +152,21 @@ export default {
     create () {
       this.time = moment().format('YYYY年MM月DD日 HH时mm分ss秒')
       axios.all([
-        this.$get('api/actuator/metrics/jvm.memory.max'),
-        this.$get('api/actuator/metrics/jvm.memory.committed'),
-        this.$get('api/actuator/metrics/jvm.memory.used'),
-        this.$get('api/actuator/metrics/jvm.buffer.memory.used'),
-        this.$get('api/actuator/metrics/jvm.buffer.count'),
-        this.$get('api/actuator/metrics/jvm.threads.daemon'),
-        this.$get('api/actuator/metrics/jvm.threads.live'),
-        this.$get('api/actuator/metrics/jvm.threads.peak'),
-        this.$get('api/actuator/metrics/jvm.classes.loaded'),
-        this.$get('api/actuator/metrics/jvm.classes.unloaded'),
-        this.$get('api/actuator/metrics/jvm.gc.memory.allocated'),
-        this.$get('api/actuator/metrics/jvm.gc.memory.promoted'),
-        this.$get('api/actuator/metrics/jvm.gc.max.data.size'),
-        this.$get('api/actuator/metrics/jvm.gc.live.data.size'),
-        this.$get('api/actuator/metrics/jvm.gc.pause')
+        this.$get('actuator/metrics/jvm.memory.max'),
+        this.$get('actuator/metrics/jvm.memory.committed'),
+        this.$get('actuator/metrics/jvm.memory.used'),
+        this.$get('actuator/metrics/jvm.buffer.memory.used'),
+        this.$get('actuator/metrics/jvm.buffer.count'),
+        this.$get('actuator/metrics/jvm.threads.daemon'),
+        this.$get('actuator/metrics/jvm.threads.live'),
+        this.$get('actuator/metrics/jvm.threads.peak'),
+        this.$get('actuator/metrics/jvm.classes.loaded'),
+        this.$get('actuator/metrics/jvm.classes.unloaded'),
+        this.$get('actuator/metrics/jvm.gc.memory.allocated'),
+        this.$get('actuator/metrics/jvm.gc.memory.promoted'),
+        this.$get('actuator/metrics/jvm.gc.max.data.size'),
+        this.$get('actuator/metrics/jvm.gc.live.data.size'),
+        this.$get('actuator/metrics/jvm.gc.pause')
       ]).then((r) => {
         this.jvm.memory.max = this.convert(r[0].data.measurements[0].value)
         this.jvm.memory.committed = this.convert(r[1].data.measurements[0].value)

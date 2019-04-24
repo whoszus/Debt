@@ -313,7 +313,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      this.$get('api/job/log', {
+      this.$get('job/log', {
         ...params
       }).then((r) => {
         let data = r.data

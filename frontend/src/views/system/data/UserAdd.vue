@@ -121,7 +121,7 @@ export default {
         if (!err && this.validateStatus === 'success') {
           this.loading = true
           this.user.createUserId = this.currentUser.username;
-          this.$post('api/ddata/create', {
+          this.$post('ddata/create', {
             ...this.user
           }).then((r) => {
             this.reset()

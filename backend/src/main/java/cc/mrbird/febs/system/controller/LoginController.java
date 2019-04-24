@@ -32,7 +32,6 @@ import java.util.*;
 
 @Validated
 @RestController
-@RequestMapping("api")
 public class LoginController {
 
     @Autowired

@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("api//menu")
+@RequestMapping("/menu")
 public class MenuController extends BaseController {
 
     private String message;

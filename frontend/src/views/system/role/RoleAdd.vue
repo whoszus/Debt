@@ -146,7 +146,7 @@ export default {
           if (!err) {
             this.loading = true
             this.role.menuId = checkedArr.join(',')
-            this.$post('api/role', {
+            this.$post('role', {
               ...this.role
             }).then((r) => {
               this.reset()
@@ -185,7 +185,7 @@ export default {
   watch: {
     roleAddVisiable () {
       if (this.roleAddVisiable) {
-        this.$get('api/menu').then((r) => {
+        this.$get('menu').then((r) => {
           this.menuTreeData = r.data.rows.children
           this.allTreeKeys = r.data.ids
         })

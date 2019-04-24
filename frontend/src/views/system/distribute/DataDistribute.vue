@@ -78,7 +78,7 @@
             this.loading = true
             let user = this.form.getFieldsValue()
             user.dataIds = this.dataIds
-            this.$get('api//ddata/distribute', {
+            this.$get('/ddata/distribute', {
               ...user
             }).then((r) => {
               this.loading = false
@@ -91,7 +91,7 @@
       },
     },
     /*mounted () {
-      this.$get('api//user').then((r) => {
+      this.$get('/user').then((r) => {
           let operators = r.data.rows
           this.operatorData = [];
           let that = this;
@@ -119,7 +119,7 @@
       },*/
       dataDistributeVisiable () {
         if (this.dataDistributeVisiable) {
-          this.$get('api//user').then((r) => {
+          this.$get('/user').then((r) => {
             let operators = r.data.rows
             this.operatorData = [];
             let that = this;

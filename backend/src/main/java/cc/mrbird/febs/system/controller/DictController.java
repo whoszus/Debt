@@ -22,7 +22,7 @@ import java.util.Map;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("api/dict")
+@RequestMapping("dict")
 public class DictController extends BaseController {
 
     private String message;

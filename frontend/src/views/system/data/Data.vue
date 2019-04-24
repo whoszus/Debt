@@ -465,7 +465,7 @@ export default {
         params.pageNum = this.pagination.defaultCurrent
       }
       params.userId = this.currentUser.userId;
-      this.$get('api/ddata', {
+      this.$get('ddata', {
         ...params
       }).then((r) => {
         let data = r.data

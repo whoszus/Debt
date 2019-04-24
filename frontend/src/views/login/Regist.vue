@@ -217,7 +217,7 @@ export default {
     handleSubmit () {
       this.form.validateFields((err, values) => {
         if (!err) {
-          this.$post('api/regist', {
+          this.$post('regist', {
             username: this.username,
             password: this.password
           }).then(() => {

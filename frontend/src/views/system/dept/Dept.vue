@@ -234,7 +234,7 @@ export default {
     },
     fetch (params = {}) {
       this.loading = true
-      this.$get('api/dept', {
+      this.$get('dept', {
         ...params
       }).then((r) => {
         let data = r.data

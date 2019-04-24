@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("api/role")
+@RequestMapping("role")
 public class RoleController extends BaseController {
 
     @Autowired

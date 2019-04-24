@@ -409,7 +409,7 @@ export default {
         params.pageSize = this.pagination.defaultPageSize
         params.pageNum = this.pagination.defaultCurrent
       }
-      this.$get('api/user', {
+      this.$get('user', {
         ...params
       }).then((r) => {
         let data = r.data

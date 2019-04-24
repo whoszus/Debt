@@ -29,12 +29,10 @@ public class JWTFilter extends BasicHttpAuthenticationFilter {
         FebsProperties febsProperties = SpringContextUtil.getBean(FebsProperties.class);
         String[] anonUrl = StringUtils.splitByWholeSeparatorPreserveAllTokens(febsProperties.getShiro().getAnonUrl(), ",");
 
-        boolean match = false;
         for (String u : anonUrl) {
             if (pathMatcher.match(u, httpServletRequest.getRequestURI()))
-                match = true;
+               return  true;
         }
-        if (match) return true;
         if (isLoginAttempt(request, response)) {
             return executeLogin(request, response);
         }

@@ -17,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("api/weather")
+@RequestMapping("weather")
 public class WeatherController extends BaseController {
 
     @GetMapping

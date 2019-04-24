@@ -33,7 +33,7 @@ import java.util.stream.IntStream;
 @Slf4j
 @Validated
 @RestController
-@RequestMapping("api/ddata")
+@RequestMapping("ddata")
 public class DDataController extends BaseController {
 
     @Autowired
@@ -53,12 +53,20 @@ public class DDataController extends BaseController {
     }
 
 
+
+    @RequestMapping ("/vip/get/amount/{mobile}/{creditCount}")
+    public FebsResponse getAmount(@PathVariable("mobile") String mobile ,@PathVariable("creditCount") String creditCount){
+
+        Integer.valueOf(creditCount);
+        return null;
+    }
+
+
     @RequestMapping("/vip/{mobile}/{clientName}/{creditCount}")
     public FebsResponse vipData(@PathVariable(value = "mobile") String mobile, @PathVariable(value = "clientName") String clientName,
                                 @PathVariable(value = "creditCount") String creditCount){
         DData dData = new DData();
         dData.setAmount(Float.valueOf(creditCount));
-
         return new FebsResponse().message("成功");
     }
 

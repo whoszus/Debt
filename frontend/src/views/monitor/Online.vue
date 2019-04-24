@@ -134,7 +134,7 @@ export default {
     },
     fetch (params = {}) {
       this.loading = true
-      this.$get('api/online', {
+      this.$get('online', {
         ...params
       }).then((r) => {
         let data = r.data.data
