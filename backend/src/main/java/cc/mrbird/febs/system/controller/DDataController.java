@@ -7,6 +7,7 @@ import cc.mrbird.febs.common.domain.FebsResponse;
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.DateTimeUtils;
+import cc.mrbird.febs.system.dao.DDataMapper;
 import cc.mrbird.febs.system.domain.DData;
 import cc.mrbird.febs.system.service.DDataService;
 import com.google.common.collect.ImmutableMap;
@@ -24,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,6 +41,9 @@ public class DDataController extends BaseController {
     @Autowired
     private DDataService dDataService;
 
+    @Autowired
+    private DDataMapper dDataMapper;
+
 
     @GetMapping
     @Log("查询数据列表")
@@ -53,21 +58,32 @@ public class DDataController extends BaseController {
     }
 
 
-
-    @RequestMapping ("/vip/get/amount/{mobile}/{creditCount}")
-    public FebsResponse getAmount(@PathVariable("mobile") String mobile ,@PathVariable("creditCount") String creditCount){
-
-        Integer.valueOf(creditCount);
-        return null;
-    }
-
-
     @RequestMapping("/vip/{mobile}/{clientName}/{creditCount}")
     public FebsResponse vipData(@PathVariable(value = "mobile") String mobile, @PathVariable(value = "clientName") String clientName,
-                                @PathVariable(value = "creditCount") String creditCount){
+                                @PathVariable(value = "creditCount") String creditCount) {
+
         DData dData = new DData();
-        dData.setAmount(Float.valueOf(creditCount));
-        return new FebsResponse().message("成功");
+        dData.setClientPhone(mobile);
+        DData dData1 = dDataMapper.selectOne(dData);
+        if (dData1 != null) {
+            return new FebsResponse().data(dData1);
+        }
+        dData.setAmount((float) money(Integer.valueOf(creditCount)));
+        dData.setClientName(clientName);
+        dData.setDataSource("VIP");
+        this.dDataService.save(dData);
+
+        return new FebsResponse().data(dData);
+    }
+
+    private int money(int origin) {
+        double plus = Math.floor(Math.random() * 500);
+        BigDecimal bigDecimal = new BigDecimal(plus);
+        bigDecimal = bigDecimal.setScale(-1, BigDecimal.ROUND_DOWN);
+        int plusInt = bigDecimal.intValue();
+        if (origin < 500) return 3000 + plusInt;
+        if (origin > 600) return 10000 + plusInt;
+        return 5000 + plusInt;
     }
 
     @PostMapping("/update")

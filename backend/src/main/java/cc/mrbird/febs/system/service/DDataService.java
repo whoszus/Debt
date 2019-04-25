@@ -21,4 +21,6 @@ public interface DDataService extends IService<DData> {
     void distributeData(Integer[] dataIds, Integer userId);
 
     void batchInsert(List<DData> dataList);
+
+    DData selectByMobile(String mobile);
 }

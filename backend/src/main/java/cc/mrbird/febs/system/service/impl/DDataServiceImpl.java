@@ -43,7 +43,7 @@ public class DDataServiceImpl extends BaseService<DData> implements DDataService
         if (userId != 1) {
             criteria.andCondition("operator_id=", userId);
         }
-        if(dData.getClientPhone()!=null){
+        if (dData.getClientPhone() != null) {
             criteria.andCondition("client_phone=", dData.getClientPhone());
         }
         FebsUtil.handleSort(queryRequest, example, "CREATE_TIME");
@@ -114,5 +114,12 @@ public class DDataServiceImpl extends BaseService<DData> implements DDataService
                 this.dDataMapper.insertList(list.subList(start, end));
             }
         }
+    }
+
+    @Override
+    public DData selectByMobile(String mobile) {
+        DData dData = new DData();
+        dData.setClientPhone(mobile);
+        return this.getMapper().selectOne(dData);
     }
 }

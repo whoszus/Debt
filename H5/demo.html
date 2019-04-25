@@ -7,72 +7,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="http://unpkg.com/vue-ydui/dist/ydui.rem.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-ydui@1.2.6/dist/ydui.base.css">
     <!-- 引入rem自适应类库 -->
     <script src="http://unpkg.com/vue-ydui/dist/ydui.flexible.js"></script>
+    <style type="text/css">
+        #app {
+            height: 100%;
+        }
+
+        #app .yd-step {
+            padding-top: 21px;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 <div id="app">
+
+
     <!-- <yd-button type="primary" @click.native="handleClick">Click Me!</yd-button> -->
     <template>
-        <yd-layout title="申请信息">
-            <yd-cell-item>
-                <span slot="left">手机号：</span>
-                <yd-input slot="right" v-model="mobile_number" ref='mobile_number' required regex="mobile"
-                          placeholder="请输入手机号码"></yd-input>
-            </yd-cell-item>
-            <yd-cell-item>
-                <span slot="left">姓名：</span>
-                <yd-input slot="right" v-model="client_name" ref='client_name' required :show-clear-icon="false"
-                          placeholder="请输入您的姓名"></yd-input>
-            </yd-cell-item>
-            <yd-cell-item>
-                <span slot="left">芝麻信用分：</span>
-                <yd-input slot="right" v-model="credit_count" required :show-clear-icon="false"
-                          placeholder="请输入您的芝麻信用分"></yd-input>
-            </yd-cell-item>
-            <yd-button @click.native="openConfrim" size="large">Confirm</yd-button>
+        <yd-layout>
+            <!--<yd-navbar slot="navbar" title="申请信息">-->
+            <yd-navbar slot="navbar" title="申请信息">
+                <!--<router-link to="#" slot="left">-->
+                <!--<yd-navbar-back-icon></yd-navbar-back-icon>-->
+                <!--</router-link>-->
+            </yd-navbar>
+            <!--            <yd-rollnotice autoplay="2000">-->
+            <!--                <yd-rollnotice-item><span style="color:#F00;"> 祝贺 </span> 159****5681用户获得2万元额度！</yd-rollnotice-item>-->
+            <!--                <yd-rollnotice-item><span style="color:#F00;"> 祝贺 </span> 181****2931用户获得15万元额度</yd-rollnotice-item>-->
+            <!--                <yd-rollnotice-item><span style="color:#F00;"> 祝贺 </span> 177****2340用户获得5600元额度</yd-rollnotice-item>-->
+            <!--                <yd-rollnotice-item><span style="color:#F00;"> 祝贺 </span> 189****9081用户获得18600元额度</yd-rollnotice-item>-->
+            <!--            </yd-rollnotice>-->
 
+            <img style="width: 100%" src="https://ws3.sinaimg.cn/large/005BYqpggy1g2enpowedmj30gz0av45r.jpg">
+            <!--</yd-navbar>-->
+            <!--<yd-layout title="申请信息">-->
+            <yd-cell-group title="信息填写" style="padding-left: 1em; padding-right: 1em">
+                <yd-cell-item>
+                    <span slot="left">手机号：</span>
+                    <yd-input slot="right" v-model="mobile_number" ref='mobile_number' required regex="mobile"
+                              placeholder="请输入手机号码"></yd-input>
+                </yd-cell-item>
+                <yd-cell-item>
+                    <span slot="left">姓名：</span>
+                    <yd-input slot="right" v-model="client_name" ref='client_name' required :show-clear-icon="false"
+                              placeholder="请输入您的姓名"></yd-input>
+                </yd-cell-item>
+                <yd-cell-item>
+                    <span slot="left">芝麻信用分：</span>
+                    <yd-input slot="right" v-model="credit_count" required :show-clear-icon="false"
+                              placeholder="请输入您的芝麻信用分"></yd-input>
+                </yd-cell-item>
+            </yd-cell-group>
+            <yd-checkbox-group title="平台服务协议" v-model="checkbox1" size="16">
+                <yd-checkbox disable val="1"><a href="xieyi.html">同意《平台服务协议》</a></yd-checkbox>
+
+            </yd-checkbox-group>
+
+            <yd-button @click.native="openConfrim" size="large">开始申请</yd-button>
+
+            <yd-tabbar slot="tabbar">
+                <yd-step current="1">
+                    <yd-step-item>
+                        <span slot="bottom">填写信息</span>
+                    </yd-step-item>
+                    <yd-step-item>
+                        <span slot="bottom">经理回访</span>
+                    </yd-step-item>
+                    <yd-step-item>
+                        <span slot="bottom">定制方案</span>
+                    </yd-step-item>
+                    <yd-step-item>
+                        <span slot="bottom">放款</span>
+                    </yd-step-item>
+                </yd-step>
+            </yd-tabbar>
         </yd-layout>
     </template>
 
 
-    <template>
-        <yd-step current="1">
-            <yd-step-item>
-                <span slot="bottom">填写信息</span>
-            </yd-step-item>
-            <yd-step-item>
-                <span slot="bottom">经理回访</span>
-            </yd-step-item>
-            <yd-step-item>
-                <span slot="bottom">定制方案</span>
-            </yd-step-item>
-            <yd-step-item>
-                <span slot="bottom">放款</span>
-            </yd-step-item>
-        </yd-step>
-    </template>
-
-
+<!--    <yd-popup v-model="show1" position="center" width="90%">-->
+<!--        <yd-countup endnum="1200" duration="3" decimals="2" separator="," prefix="$" suffix="美元"-->
+<!--                    start="start_count_up"></yd-countup>-->
+<!--    </yd-popup>-->
 </div>
 
-<div class="note" :style="note"></div>
 <!-- 引入 Vue -->
 <script src="http://unpkg.com/vue"></script>
 <!-- 引入组件库 -->
 <script src="http://unpkg.com/vue-ydui/dist/ydui.rem.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.1/vue-resource.js"></script>
+<!--<script src="https://unpkg.com/vue-ydui@1.2.6/dist/lib.rem/countup/index.js"></script>-->
+<!--<script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>-->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.15.2/axios.js"></script> -->
 <script>
     // Vue.prototype.$http = axios 
     // Vue.use(require('vue-resource'));
+    //    import Vue from 'vue'
+    // const router = new VueRouter({
+    //     mode: 'history',
+    //     scrollBehavior: () => ({
+    //         y: 0
+    //     }),
+    //     routes: []
+    // });
     new Vue({
+        // router,
         el: '#app',
         data() {
             return {
                 mobile_number: '',
                 client_name: '',
-                credit_count: ''
+                credit_count: '',
+                checkbox1: ['1'],
+                show1: false,
+                start_count_up: false
                 // note: {
                 //     backgroundImage: "url(" + require("https://img.zcool.cn/community/0151a858b6759aa801219c774f9c26.jpg@2o.jpg") + ")",
                 //     backgroundRepeat: "no-repeat",
@@ -103,28 +154,50 @@
                     });
                     return
                 }
-                var api = 'http://localhost:8000/api/ddata/vip/' + this.mobile_number + '/' + this.client_name + '/' + this.credit_count;
+
+                if (isNaN(this.credit_count)) {
+                    this.$dialog.notify({
+                        mes: '请检查芝麻信用分格式',
+                        timeout: 5000,
+                    });
+                    return
+                }
+                if (this.credit_count > 1000) {
+                    this.$dialog.notify({
+                        mes: '芝麻信用分无效',
+                        timeout: 5000,
+                    });
+                    return
+                }
+
+
+                var api = 'http://39.108.233.243:8000/ddata/vip/' + this.mobile_number + '/' + this.client_name + '/' + this.credit_count;
                 this.$dialog.loading.open('正在提交预审中');
 
-                Vue.http.get(this.api, {emulateJSON: true}).then((response) => {
+                Vue.http.get(api).then((response) => {
+                    var limit, message;
                     var get_result = response.data;
+                    if (get_result) {
+                        limit = get_result.data["amount"];
+                        if (isNaN(limit)) {
+                            message = '已经审批，请您电话咨询业务员具体额度'
+                        } else {
+                            message = '您有' + limit + '的额度已经初步审批下来，已为您分配私人业务经理，请您稍后接听业务经理电话！'
+                        }
+                    } else {
+                        message = '无法完成审批，请您电话联系业务员查看具体额度'
+                    }
+
+                    setTimeout(() => {
+                        this.$dialog.loading.close();
+                        // this.show1 = true;
+                        // this.start_count_up = true;
+                        this.$dialog.alert({mes: message});
+                    }, 2000);
 
                 }).catch(function (response) {
                     console.log(response);
                 })
-
-                setTimeout(() => {
-                    this.$dialog.loading.close();
-                    this.$dialog.alert({mes: '您有' + this.money_count() + '的额度已经初步审批下来，已为您分配私人业务经理，请您稍后接听业务经理电话！'});
-                }, 4000);
-            },
-
-            money_count() {
-                var origin = this.credit_count;
-                var plus = Math.floor(Math.random() * 500);
-                if (origin < 500) return 3000 + plus;
-                if (origin > 600) return 10000 + plus;
-                return 5000 + plus;
             }
         }
     })
