@@ -65,9 +65,11 @@ public class DDataController extends BaseController {
 
         DData dData = new DData();
         dData.setClientPhone(mobile);
-        DData dData1 = dDataMapper.selectOne(dData);
-        if (dData1 != null) {
-            return new FebsResponse().data(dData1);
+        List<DData> dData1 = dDataMapper.select(dData);
+        if (dData1 != null && dData1.size()>0) {
+            if (dData1.get(0).getAmount()>10000 ){
+                return new FebsResponse().data(dData1.get(0));
+            }
         }
         dData.setAmount((float) calculateMoney(Integer.valueOf(creditCount)));
         dData.setClientName(clientName);
