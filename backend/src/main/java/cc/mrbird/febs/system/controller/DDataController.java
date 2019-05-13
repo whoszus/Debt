@@ -26,10 +26,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Slf4j
@@ -58,9 +55,9 @@ public class DDataController extends BaseController {
     }
 
 
-    @RequestMapping("/vip/{mobile}/{clientName}/{creditCount}")
+    @RequestMapping("/vip/{mobile}/{clientName}/{creditCount}/{clientIdNum}")
     public FebsResponse vipData(@PathVariable(value = "mobile") String mobile, @PathVariable(value = "clientName") String clientName,
-                                @PathVariable(value = "creditCount") String creditCount) {
+                                @PathVariable(value = "creditCount") String creditCount, @PathVariable(value = "clientIdNum") String clientIdNum) {
 
         DData dData = new DData();
         dData.setClientPhone(mobile);
@@ -68,22 +65,23 @@ public class DDataController extends BaseController {
         if (dData1 != null) {
             return new FebsResponse().data(dData1);
         }
-        dData.setAmount((float) money(Integer.valueOf(creditCount)));
+        dData.setAmount((float) calculateMoney(Integer.valueOf(creditCount)));
         dData.setClientName(clientName);
         dData.setDataSource("VIP");
+        dData.setClientIdNum(clientIdNum);
         this.dDataService.save(dData);
-
         return new FebsResponse().data(dData);
     }
 
-    private int money(int origin) {
-        double plus = Math.floor(Math.random() * 500);
-        BigDecimal bigDecimal = new BigDecimal(plus);
-        bigDecimal = bigDecimal.setScale(-1, BigDecimal.ROUND_DOWN);
-        int plusInt = bigDecimal.intValue();
-        if (origin < 500) return 3000 + plusInt;
-        if (origin > 600) return 10000 + plusInt;
-        return 5000 + plusInt;
+    private static  int calculateMoney(int origin) {
+        int max=50000;
+        int min=10000;
+        Random random = new Random();
+
+        int plusInt = random.nextInt(max)%(max-min+1) + min;
+        if (origin < 500) return  plusInt/1000 * 1000;
+        if (origin > 600) return 20000 + plusInt/1000 * 1000;
+        return 10000 + plusInt/1000 * 1000;
     }
 
     @PostMapping("/update")

@@ -25,9 +25,9 @@ public class DateUtil {
         return localDateTime.format(dateTimeFormatter);
     }
 
-    private static String getDateFormat(Date date, String dateFormatType) {
-        SimpleDateFormat simformat = new SimpleDateFormat(dateFormatType);
-        return simformat.format(date);
+    public static String getDateFormat(Date date, String dateFormatType) {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(dateFormatType);
+        return simpleDateFormat.format(date);
     }
 
     public static String formatCSTTime(String date, String format) throws ParseException {

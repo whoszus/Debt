@@ -3,6 +3,8 @@ package cc.mrbird.febs.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.poi.ss.formula.functions.T;
+import org.springframework.http.ResponseEntity;
 
 import javax.net.ssl.*;
 import java.io.*;
@@ -136,6 +138,8 @@ public class HttpUtil {
         return result.toString();
     }
 
+
+
     private static class TrustAnyTrustManager implements X509TrustManager {
         public void checkClientTrusted(X509Certificate[] chain, String authType) {
             //trust anything
@@ -155,5 +159,6 @@ public class HttpUtil {
             return true;
         }
     }
+
 
 }
