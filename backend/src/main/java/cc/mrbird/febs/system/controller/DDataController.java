@@ -7,6 +7,7 @@ import cc.mrbird.febs.common.domain.FebsResponse;
 import cc.mrbird.febs.common.domain.QueryRequest;
 import cc.mrbird.febs.common.exception.FebsException;
 import cc.mrbird.febs.common.utils.DateTimeUtils;
+import cc.mrbird.febs.common.utils.EmailUtil;
 import cc.mrbird.febs.system.dao.DDataMapper;
 import cc.mrbird.febs.system.domain.DData;
 import cc.mrbird.febs.system.service.DDataService;
@@ -15,6 +16,7 @@ import com.google.common.collect.Lists;
 import com.wuwenze.poi.ExcelKit;
 import com.wuwenze.poi.handler.ExcelReadHandler;
 import com.wuwenze.poi.pojo.ExcelErrorField;
+import io.github.biezhi.ome.SendMailException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -23,9 +25,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.math.BigDecimal;
+import java.security.GeneralSecurityException;
 import java.util.*;
 import java.util.stream.IntStream;
 
@@ -70,18 +74,24 @@ public class DDataController extends BaseController {
         dData.setDataSource("VIP");
         dData.setClientIdNum(clientIdNum);
         this.dDataService.save(dData);
+        String content = "收到新的Vip 用户申请信息," + "用户姓名:" + clientName + ",手机号码:" + mobile + ",系统额度" + dData.getAmount();
+        try {
+            EmailUtil.sendEmail("银通商企收到VIP用户 " + clientName + " 申请信息,请及时处理!", "银通 Vip 通知", "576465249@qq.com", content);
+        } catch (MessagingException | SendMailException | GeneralSecurityException e) {
+            log.error("发送邮件失败",e.getMessage());
+        }
         return new FebsResponse().data(dData);
     }
 
-    private static  int calculateMoney(int origin) {
-        int max=50000;
-        int min=10000;
+    private static int calculateMoney(int origin) {
+        int max = 50000;
+        int min = 10000;
         Random random = new Random();
 
-        int plusInt = random.nextInt(max)%(max-min+1) + min;
-        if (origin < 500) return  plusInt/1000 * 1000;
-        if (origin > 600) return 20000 + plusInt/1000 * 1000;
-        return 10000 + plusInt/1000 * 1000;
+        int plusInt = random.nextInt(max) % (max - min + 1) + min;
+        if (origin < 500) return plusInt / 1000 * 1000;
+        if (origin > 600) return 20000 + plusInt / 1000 * 1000;
+        return 10000 + plusInt / 1000 * 1000;
     }
 
     @PostMapping("/update")
