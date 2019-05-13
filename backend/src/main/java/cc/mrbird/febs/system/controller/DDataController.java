@@ -20,6 +20,7 @@ import io.github.biezhi.ome.SendMailException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,13 @@ public class DDataController extends BaseController {
     @PostMapping("/create")
     public void createData(@Valid DData dData) {
         this.dDataService.createDData(dData);
+    }
+
+
+    @RequestMapping("/delete/{id}")
+    public FebsResponse deleteData(@PathVariable(value = "id" )int id ){
+        this.dDataService.deleteDData(id);
+        return new FebsResponse().message("删除成功");
     }
 
 
