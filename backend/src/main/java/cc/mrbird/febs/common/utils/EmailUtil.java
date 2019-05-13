@@ -2,15 +2,18 @@ package cc.mrbird.febs.common.utils;
 
 import io.github.biezhi.ome.OhMyEmail;
 import io.github.biezhi.ome.SendMailException;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.mail.MessagingException;
 import java.security.GeneralSecurityException;
 import java.util.Properties;
 
 
-
+@Component
 public class EmailUtil {
 
+    @PostConstruct
     private static void before() throws GeneralSecurityException {
         // 配置，一次即可
         OhMyEmail.config(SMTP_163_SSL(), "tinkerkl@163.com", "tinker1122");

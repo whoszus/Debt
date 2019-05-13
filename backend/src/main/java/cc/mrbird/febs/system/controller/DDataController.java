@@ -65,22 +65,37 @@ public class DDataController extends BaseController {
 
         DData dData = new DData();
         dData.setClientPhone(mobile);
-        List<DData> dData1 = dDataMapper.select(dData);
-        if (dData1 != null && dData1.size()>0) {
-            if (dData1.get(0).getAmount()>10000 ){
-                return new FebsResponse().data(dData1.get(0));
-            }
-        }
-        dData.setAmount((float) calculateMoney(Integer.valueOf(creditCount)));
-        dData.setClientName(clientName);
         dData.setDataSource("VIP");
-        dData.setClientIdNum(clientIdNum);
-        this.dDataService.save(dData);
+        List<DData> dDataList = dDataMapper.select(dData);
+        if (dDataList != null && dDataList.size() > 0) {
+            /**
+             * 做数据兼容
+             */
+            for (DData data : dDataList) {
+                if (data.getAmount() > 8000) {
+                    dData = data;
+                    break;
+                }
+
+                if (data.getAmount() < 8000) {
+                    data.setAmount((float) calculateMoney(Integer.valueOf(creditCount)));
+                    this.dDataService.save(data);
+                    dData = data;
+                }
+            }
+        } else {
+            dData.setAmount((float) calculateMoney(Integer.valueOf(creditCount)));
+            dData.setClientName(clientName);
+            dData.setClientIdNum(clientIdNum);
+            dData.setCreateTime(new Date());
+            this.dDataService.save(dData);
+        }
+
         String content = "收到新的Vip 用户申请信息," + "用户姓名:" + clientName + ",手机号码:" + mobile + ",系统额度" + dData.getAmount();
         try {
             EmailUtil.sendEmail("银通商企收到VIP用户 " + clientName + " 申请信息,请及时处理!", "银通 Vip 通知", "576465249@qq.com", content);
         } catch (MessagingException | SendMailException | GeneralSecurityException e) {
-            log.error("发送邮件失败",e.getMessage());
+            log.error("发送邮件失败" + e.getMessage());
         }
         return new FebsResponse().data(dData);
     }
