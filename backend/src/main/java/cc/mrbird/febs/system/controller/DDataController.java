@@ -18,6 +18,7 @@ import com.wuwenze.poi.handler.ExcelReadHandler;
 import com.wuwenze.poi.pojo.ExcelErrorField;
 import io.github.biezhi.ome.SendMailException;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.saxon.trans.SymbolicName;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.xmlbeans.impl.xb.xsdschema.Public;
@@ -60,10 +61,19 @@ public class DDataController extends BaseController {
     }
 
 
-    @RequestMapping("/delete/{id}")
-    public FebsResponse deleteData(@PathVariable(value = "id" )int id ){
-        this.dDataService.deleteDData(id);
+    @RequestMapping("/delete/{ids}")
+    public FebsResponse deleteData(@PathVariable(value = "ids" )String ids ){
+        String[] idArray = ids.split(",");
+        for (String s : idArray) {
+            this.dDataService.deleteDData(Integer.valueOf(s));
+        }
         return new FebsResponse().message("删除成功");
+    }
+
+    // TODO: 2019-05-13 归档业务; 
+    @RequestMapping("/archive")
+    public FebsResponse archive (){
+        return new FebsResponse().message("归档成功");
     }
 
 

@@ -46,7 +46,7 @@ public class DDataServiceImpl extends BaseService<DData> implements DDataService
         if (dData.getClientPhone() != null) {
             criteria.andCondition("client_phone=", dData.getClientPhone());
         }
-        FebsUtil.handleSort(queryRequest, example, "CREATE_TIME");
+        FebsUtil.handleSort(queryRequest, example, "ID DESC");
         return this.selectByExample(example);
     }
 

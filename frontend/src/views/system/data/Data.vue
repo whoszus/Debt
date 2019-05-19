@@ -192,7 +192,7 @@ export default {
           return text.substring(0,3)+'********'
         }
       }, {
-        title: '拥有者',
+        title: '客户经理',
         dataIndex: 'operatorName'
       }, {
         title: '金额',

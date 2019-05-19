@@ -15,6 +15,7 @@
         <p><a-icon type="user"/>客户名：{{userInfoData.clientName}}</p>
         <p><a-icon type="skin"/>身份证号：{{userInfoData.clientIdNum ? userInfoData.clientIdNum : '暂无身份证信息'}}</p>
         <p><a-icon type="phone"/>客户电话：{{userInfoData.clientPhone ? userInfoData.clientPhone : '暂无电话'}}</p>
+        <!-- <p><a-icon type=" "/>创建时间：{{userInfoData.createTime}}</p> -->
         <p><a-icon type="lock"/>金额：{{userInfoData.amount ? userInfoData.amount+'万' : '暂无金额信息'}}</p>
         <p>
           <a-icon type="smile" v-if="userInfoData.status === 'finish'"/>

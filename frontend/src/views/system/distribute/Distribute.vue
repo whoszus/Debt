@@ -5,20 +5,25 @@
       <a-form layout="horizontal">
         <a-row >
         <div :class="advanced ? null: 'fold'">
-            <a-col :md="12" :sm="24" >
-              <a-form-item
-                label="手机号码"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.clientPhone"/>
+            <a-col :sm="5" >
+              <a-form-item>
+                <a-input v-model="queryParams.clientPhone" placeholder="客户手机号">
+                 <a-icon slot="prefix" type="mobile" />
+                </a-input>
               </a-form-item>
             </a-col>
-            <a-col :md="12" :sm="24" >
-              <a-form-item
-                label="数据来源"
-                :labelCol="{span: 4}"
-                :wrapperCol="{span: 18, offset: 2}">
-                <a-input v-model="queryParams.dataSource"/>
+            <a-col :sm="5" >
+              <a-form-item>
+                <a-input v-model="queryParams.dataSource" placeholder="数据源">
+                   <a-icon slot="prefix" type="lock" />
+                </a-input>
+              </a-form-item>
+            </a-col>
+            <a-col :sm="5" >
+              <a-form-item>
+                <a-input v-model="queryParams.operatorName" placeholder="业务员姓名">
+                   <a-icon slot="prefix" type="user" />
+                </a-input>
               </a-form-item>
             </a-col>
         </div>
@@ -61,6 +66,8 @@
         <a-button type="primary" ghost @click="add" v-hasPermission="'user:add'">新增</a-button>
         <a-button type="primary" ghost @click="search" >刷新</a-button>
         <a-button type="primary" ghost @click="distribute" >分配</a-button>
+        <a-button type="danger" ghost @click="batchDelete" >删除</a-button>
+
         <!--<a-tree-select
           v-show="showSelectOperator"
           :allowClear="true"
@@ -358,9 +365,9 @@ export default {
         onOk () {
           let userIds = []
           for (let key of that.selectedRowKeys) {
-            userIds.push(that.dataSource[key].userId)
+            userIds.push(that.dataSource[key].id)
           }
-          that.$delete('user/' + userIds.join(',')).then(() => {
+          that.$delete('ddata/delete/' + userIds.join(',')).then(() => {
             that.$message.success('删除成功')
             that.selectedRowKeys = []
             that.search()

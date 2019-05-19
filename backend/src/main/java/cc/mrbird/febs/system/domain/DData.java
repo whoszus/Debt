@@ -118,6 +118,15 @@ public class DData implements Serializable {
     private String describeAdd;
 
 
+    // 排序字段
+    @Transient
+    private String sortField;
+
+    // 排序规则 ascend 升序 descend 降序
+    @Transient
+    private String sortOrder;
+
+
     private static final long serialVersionUID = 1L;
 
 
